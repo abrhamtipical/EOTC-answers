@@ -1,0 +1,51 @@
+
+[
+  {
+    "id": "prayer-worship",
+    "title": "Prayer and Worship",
+    "subtopics": [
+      {
+        "id": "daily-prayers",
+        "title": "Daily Prayer Schedule",
+        "description": "Orthodox Christians traditionally pray at seven canonical hours: Matins, Prime, Terce, Sext, None, Vespers, and Compline. These prayers connect us with the rhythm of divine worship and sanctify our daily lives."
+      },
+      {
+        "id": "liturgical-calendar",
+        "title": "The Liturgical Calendar",
+        "description": "The Ethiopian Orthodox Church follows a unique calendar with 13 months. Our liturgical year is centered around the Paschal cycle, with major feasts like Timkat (Epiphany), Meskel (Finding of the True Cross), and Fasika (Easter)."
+      }
+    ]
+  },
+  {
+    "id": "sacraments",
+    "title": "Holy Sacraments",
+    "subtopics": [
+      {
+        "id": "baptism-chrismation",
+        "title": "Baptism and Chrismation",
+        "description": "In the Ethiopian Orthodox Church, baptism is performed by triple immersion, symbolizing death and resurrection with Christ. Chrismation (confirmation) immediately follows, sealing the newly baptized with the Holy Spirit."
+      },
+      {
+        "id": "holy-communion",
+        "title": "Holy Communion",
+        "description": "The Divine Liturgy is the central act of worship where we receive the Body and Blood of Christ. Proper preparation includes fasting, confession, and spiritual readiness. Children receive communion from infancy in our tradition."
+      }
+    ]
+  },
+  {
+    "id": "church-traditions",
+    "title": "Church Traditions",
+    "subtopics": [
+      {
+        "id": "ark-of-covenant",
+        "title": "The Ark of the Covenant",
+        "description": "Ethiopian Orthodox tradition holds that the original Ark of the Covenant resides in Aksum. Every Orthodox church contains a replica called a 'tabot,' which is central to our liturgical life and is carried in processions during major feasts."
+      },
+      {
+        "id": "monastic-life",
+        "title": "Monastic Tradition",
+        "description": "Monasticism plays a vital role in our church, with famous monasteries like Debre Libanos and Debre Damo. Monks and nuns dedicate their lives to prayer, fasting, and spiritual guidance, serving as living examples of Christian devotion."
+      }
+    ]
+  }
+]

@@ -1,0 +1,43 @@
+
+[
+  {
+    "id": "trinity-mystery",
+    "title": "The Mystery of the Trinity",
+    "category": "Theology",
+    "description": "Understanding the divine nature of the Father, Son, and Holy Spirit in Orthodox theology",
+    "htmlPath": "/teachings/trinity.html",
+    "difficulty": "intermediate",
+    "readTime": "15 min",
+    "tags": ["trinity", "theology", "divine nature"]
+  },
+  {
+    "id": "fasting-spirituality",
+    "title": "The Spiritual Discipline of Fasting",
+    "category": "Spiritual Practice",
+    "description": "The role of fasting in Orthodox spiritual life and its theological significance",
+    "htmlPath": "/teachings/fasting.html",
+    "difficulty": "beginner",
+    "readTime": "10 min",
+    "tags": ["fasting", "spiritual discipline", "prayer"]
+  },
+  {
+    "id": "mary-theotokos",
+    "title": "Mary, the Theotokos",
+    "category": "Mariology",
+    "description": "The Orthodox understanding of the Virgin Mary as the Mother of God",
+    "htmlPath": "/teachings/mary.html",
+    "difficulty": "intermediate",
+    "readTime": "12 min",
+    "tags": ["mary", "theotokos", "christology"]
+  },
+  {
+    "id": "resurrection-victory",
+    "title": "The Victory of the Resurrection",
+    "category": "Christology",
+    "description": "The central importance of Christ's resurrection in Orthodox faith",
+    "htmlPath": "/teachings/resurrection.html",
+    "difficulty": "advanced",
+    "readTime": "20 min",
+    "tags": ["resurrection", "christ", "salvation"]
+  }
+]
