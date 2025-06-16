@@ -12,6 +12,7 @@ import { SearchPage } from '@/pages/SearchPage';
 import { BookmarksPage } from '@/pages/BookmarksPage';
 import { SettingsPage } from '@/pages/SettingsPage';
 import { AuthPage } from '@/pages/AuthPage';
+import { AdminDashboard } from '@/pages/AdminDashboard';
 import { Layout } from '@/components/Layout';
 import { AuthProvider } from '@/providers/AuthProvider';
 import './App.css';
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/bookmarks" element={<BookmarksPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
                 <Route path="/auth" element={<AuthPage />} />
+                <Route path="/admin" element={<AdminDashboard />} />
               </Routes>
             </Layout>
           </Router>

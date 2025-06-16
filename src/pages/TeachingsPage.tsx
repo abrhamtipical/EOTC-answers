@@ -4,24 +4,38 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Book, Clock, Search, Filter } from 'lucide-react';
+import { Book, Clock, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import teachingsData from '@/data/teachings.json';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 export function TeachingsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const navigate = useNavigate();
 
-  const categories = ['all', ...new Set(teachingsData.map(t => t.category))];
+  const { data: teachings, isLoading } = useQuery({
+    queryKey: ['teachings'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('teachings')
+        .select('*')
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const categories = ['all', ...new Set(teachings?.map(t => t.category) || [])];
   
-  const filteredTeachings = teachingsData.filter(teaching => {
+  const filteredTeachings = teachings?.filter(teaching => {
     const matchesSearch = teaching.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          teaching.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         teaching.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
+                         teaching.tags.some((tag: string) => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesCategory = selectedCategory === 'all' || teaching.category === selectedCategory;
     return matchesSearch && matchesCategory;
-  });
+  }) || [];
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -31,6 +45,17 @@ export function TeachingsPage() {
       default: return 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200';
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto px-4 py-6">
+        <div className="text-center">
+          <div className="animate-spin h-8 w-8 mx-auto mb-4 border-2 border-amber-600 border-t-transparent rounded-full"></div>
+          <p>Loading teachings...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 py-6 space-y-6">
@@ -99,7 +124,7 @@ export function TeachingsPage() {
               <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
                 <div className="flex items-center space-x-1">
                   <Clock className="h-3 w-3" />
-                  <span>{teaching.readTime}</span>
+                  <span>{teaching.read_time}</span>
                 </div>
                 <div className="flex items-center space-x-1">
                   <Book className="h-3 w-3" />
@@ -107,8 +132,8 @@ export function TeachingsPage() {
                 </div>
               </div>
               <div className="flex flex-wrap gap-1 mt-3">
-                {teaching.tags.slice(0, 3).map(tag => (
-                  <Badge key={tag} variant="outline" className="text-xs">
+                {teaching.tags.slice(0, 3).map((tag: string, index: number) => (
+                  <Badge key={index} variant="outline" className="text-xs">
                     {tag}
                   </Badge>
                 ))}

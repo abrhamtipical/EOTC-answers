@@ -2,31 +2,53 @@
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, Search, HelpCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import faqData from '@/data/faq.json';
+import { Search, HelpCircle } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 
 export function FAQPage() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [openSections, setOpenSections] = useState<string[]>([]);
-  const navigate = useNavigate();
 
-  const filteredFAQs = faqData.filter(faq =>
-    faq.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    faq.subtopics.some(subtopic =>
-      subtopic.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      subtopic.description.toLowerCase().includes(searchTerm.toLowerCase())
+  const { data: faqs, isLoading } = useQuery({
+    queryKey: ['faqs'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('faqs')
+        .select('*')
+        .order('subject', { ascending: true });
+      
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Group FAQs by subject
+  const groupedFaqs = faqs?.reduce((acc: any, faq) => {
+    if (!acc[faq.subject]) {
+      acc[faq.subject] = [];
+    }
+    acc[faq.subject].push(faq);
+    return acc;
+  }, {}) || {};
+
+  const filteredSubjects = Object.keys(groupedFaqs).filter(subject =>
+    subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    groupedFaqs[subject].some((faq: any) =>
+      faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      faq.answer.toLowerCase().includes(searchTerm.toLowerCase())
     )
   );
 
-  const toggleSection = (id: string) => {
-    setOpenSections(prev =>
-      prev.includes(id)
-        ? prev.filter(sectionId => sectionId !== id)
-        : [...prev, id]
+  if (isLoading) {
+    return (
+      <div className="container mx-auto px-4 py-6">
+        <div className="text-center">
+          <div className="animate-spin h-8 w-8 mx-auto mb-4 border-2 border-amber-600 border-t-transparent rounded-full"></div>
+          <p>Loading FAQs...</p>
+        </div>
+      </div>
     );
-  };
+  }
 
   return (
     <div className="container mx-auto px-4 py-6 space-y-6">
@@ -50,53 +72,33 @@ export function FAQPage() {
       </div>
 
       <div className="space-y-4">
-        {filteredFAQs.map(faq => (
-          <Card key={faq.id} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-amber-200 dark:border-slate-600">
-            <Collapsible
-              open={openSections.includes(faq.id)}
-              onOpenChange={() => toggleSection(faq.id)}
-            >
-              <CollapsibleTrigger asChild>
-                <CardHeader className="cursor-pointer hover:bg-amber-50 dark:hover:bg-slate-700/50 transition-colors">
-                  <CardTitle className="flex items-center justify-between text-amber-800 dark:text-amber-100">
-                    <span className="flex items-center space-x-2">
-                      <HelpCircle className="h-5 w-5" />
-                      <span>{faq.title}</span>
-                    </span>
-                    <ChevronDown 
-                      className={`h-5 w-5 transition-transform ${
-                        openSections.includes(faq.id) ? 'rotate-180' : ''
-                      }`}
-                    />
-                  </CardTitle>
-                </CardHeader>
-              </CollapsibleTrigger>
-              <CollapsibleContent>
-                <CardContent className="pt-0">
-                  <div className="space-y-3">
-                    {faq.subtopics.map(subtopic => (
-                      <div
-                        key={subtopic.id}
-                        onClick={() => navigate(`/faq/${subtopic.id}`)}
-                        className="p-4 bg-amber-50 dark:bg-slate-700/50 rounded-lg cursor-pointer hover:bg-amber-100 dark:hover:bg-slate-600/50 transition-colors"
-                      >
-                        <h4 className="font-medium text-amber-800 dark:text-amber-100 mb-2">
-                          {subtopic.title}
-                        </h4>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2">
-                          {subtopic.description}
-                        </p>
-                      </div>
-                    ))}
+        {filteredSubjects.map(subject => (
+          <Card key={subject} className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-amber-200 dark:border-slate-600">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 text-amber-800 dark:text-amber-100">
+                <HelpCircle className="h-5 w-5" />
+                <span>{subject}</span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {groupedFaqs[subject].map((faq: any) => (
+                  <div key={faq.id} className="border-l-4 border-amber-200 pl-4">
+                    <h4 className="font-medium text-amber-800 dark:text-amber-100 mb-2">
+                      {faq.question}
+                    </h4>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      {faq.answer}
+                    </p>
                   </div>
-                </CardContent>
-              </CollapsibleContent>
-            </Collapsible>
+                ))}
+              </div>
+            </CardContent>
           </Card>
         ))}
       </div>
 
-      {filteredFAQs.length === 0 && (
+      {filteredSubjects.length === 0 && (
         <div className="text-center py-12">
           <HelpCircle className="h-12 w-12 mx-auto text-gray-400 mb-4" />
           <h3 className="text-lg font-medium text-gray-600 dark:text-gray-300 mb-2">
