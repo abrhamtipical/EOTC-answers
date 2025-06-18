@@ -11,7 +11,10 @@ import { AdminTeachings } from '@/components/admin/AdminTeachings';
 import { AdminFAQs } from '@/components/admin/AdminFAQs';
 import { AdminQuestions } from '@/components/admin/AdminQuestions';
 import { AdminUsers } from '@/components/admin/AdminUsers';
-import { Book, HelpCircle, MessageSquare, Users, Shield } from 'lucide-react';
+import { AdminArticles } from '@/components/admin/AdminArticles';
+import { AdminEbooks } from '@/components/admin/AdminEbooks';
+import { AdminContacts } from '@/components/admin/AdminContacts';
+import { Book, HelpCircle, MessageSquare, Users, Shield, FileText, BookOpen, Mail } from 'lucide-react';
 
 export function AdminDashboard() {
   const { user } = useAuth();
@@ -38,11 +41,14 @@ export function AdminDashboard() {
   const { data: stats } = useQuery({
     queryKey: ['admin-stats'],
     queryFn: async () => {
-      const [teachingsRes, faqsRes, questionsRes, usersRes] = await Promise.all([
+      const [teachingsRes, faqsRes, questionsRes, usersRes, articlesRes, ebooksRes, contactsRes] = await Promise.all([
         supabase.from('teachings').select('id', { count: 'exact' }),
         supabase.from('faqs').select('id', { count: 'exact' }),
         supabase.from('user_questions').select('id', { count: 'exact' }),
-        supabase.from('admin_users').select('id', { count: 'exact' })
+        supabase.from('admin_users').select('id', { count: 'exact' }),
+        supabase.from('articles').select('id', { count: 'exact' }),
+        supabase.from('ebooks').select('id', { count: 'exact' }),
+        supabase.from('contact_submissions').select('id', { count: 'exact' })
       ]);
 
       return {
@@ -50,6 +56,9 @@ export function AdminDashboard() {
         faqs: faqsRes.count || 0,
         questions: questionsRes.count || 0,
         admins: usersRes.count || 0,
+        articles: articlesRes.count || 0,
+        ebooks: ebooksRes.count || 0,
+        contacts: contactsRes.count || 0,
       };
     },
     enabled: isAdmin,
@@ -110,50 +119,86 @@ export function AdminDashboard() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <Book className="h-8 w-8 text-amber-600" />
+              <Book className="h-6 w-6 text-amber-600" />
               <div>
-                <p className="text-2xl font-bold">{stats?.teachings || 0}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">Teachings</p>
+                <p className="text-xl font-bold">{stats?.teachings || 0}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-300">Teachings</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <HelpCircle className="h-8 w-8 text-amber-600" />
+              <FileText className="h-6 w-6 text-amber-600" />
               <div>
-                <p className="text-2xl font-bold">{stats?.faqs || 0}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">FAQs</p>
+                <p className="text-xl font-bold">{stats?.articles || 0}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-300">Articles</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <MessageSquare className="h-8 w-8 text-amber-600" />
+              <BookOpen className="h-6 w-6 text-amber-600" />
               <div>
-                <p className="text-2xl font-bold">{stats?.questions || 0}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">Questions</p>
+                <p className="text-xl font-bold">{stats?.ebooks || 0}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-300">eBooks</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <Users className="h-8 w-8 text-amber-600" />
+              <HelpCircle className="h-6 w-6 text-amber-600" />
               <div>
-                <p className="text-2xl font-bold">{stats?.admins || 0}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">Admins</p>
+                <p className="text-xl font-bold">{stats?.faqs || 0}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-300">FAQs</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-2">
+              <MessageSquare className="h-6 w-6 text-amber-600" />
+              <div>
+                <p className="text-xl font-bold">{stats?.questions || 0}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-300">Questions</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-2">
+              <Mail className="h-6 w-6 text-amber-600" />
+              <div>
+                <p className="text-xl font-bold">{stats?.contacts || 0}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-300">Contacts</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex items-center space-x-2">
+              <Users className="h-6 w-6 text-amber-600" />
+              <div>
+                <p className="text-xl font-bold">{stats?.admins || 0}</p>
+                <p className="text-xs text-gray-600 dark:text-gray-300">Admins</p>
               </div>
             </div>
           </CardContent>
@@ -162,15 +207,26 @@ export function AdminDashboard() {
 
       {/* Admin Tabs */}
       <Tabs defaultValue="teachings" className="space-y-4">
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-7">
           <TabsTrigger value="teachings">Teachings</TabsTrigger>
+          <TabsTrigger value="articles">Articles</TabsTrigger>
+          <TabsTrigger value="ebooks">eBooks</TabsTrigger>
           <TabsTrigger value="faqs">FAQs</TabsTrigger>
           <TabsTrigger value="questions">Questions</TabsTrigger>
+          <TabsTrigger value="contacts">Contacts</TabsTrigger>
           <TabsTrigger value="users">Users</TabsTrigger>
         </TabsList>
 
         <TabsContent value="teachings">
           <AdminTeachings />
+        </TabsContent>
+
+        <TabsContent value="articles">
+          <AdminArticles />
+        </TabsContent>
+
+        <TabsContent value="ebooks">
+          <AdminEbooks />
         </TabsContent>
 
         <TabsContent value="faqs">
@@ -179,6 +235,10 @@ export function AdminDashboard() {
 
         <TabsContent value="questions">
           <AdminQuestions />
+        </TabsContent>
+
+        <TabsContent value="contacts">
+          <AdminContacts />
         </TabsContent>
 
         <TabsContent value="users">

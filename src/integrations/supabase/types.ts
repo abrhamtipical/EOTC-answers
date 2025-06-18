@@ -30,28 +30,175 @@ export type Database = {
         }
         Relationships: []
       }
+      articles: {
+        Row: {
+          author_id: string | null
+          category: string
+          content: string
+          content_am: string | null
+          cover_image: string | null
+          created_at: string
+          excerpt: string | null
+          excerpt_am: string | null
+          id: string
+          language: string
+          status: string
+          tags: string[] | null
+          title: string
+          title_am: string | null
+          updated_at: string
+        }
+        Insert: {
+          author_id?: string | null
+          category: string
+          content: string
+          content_am?: string | null
+          cover_image?: string | null
+          created_at?: string
+          excerpt?: string | null
+          excerpt_am?: string | null
+          id?: string
+          language?: string
+          status?: string
+          tags?: string[] | null
+          title: string
+          title_am?: string | null
+          updated_at?: string
+        }
+        Update: {
+          author_id?: string | null
+          category?: string
+          content?: string
+          content_am?: string | null
+          cover_image?: string | null
+          created_at?: string
+          excerpt?: string | null
+          excerpt_am?: string | null
+          id?: string
+          language?: string
+          status?: string
+          tags?: string[] | null
+          title?: string
+          title_am?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      contact_submissions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          language: string | null
+          message: string
+          name: string
+          status: string | null
+          subject: string | null
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          language?: string | null
+          message: string
+          name: string
+          status?: string | null
+          subject?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          language?: string | null
+          message?: string
+          name?: string
+          status?: string | null
+          subject?: string | null
+        }
+        Relationships: []
+      }
+      ebooks: {
+        Row: {
+          category: string | null
+          cover_image: string | null
+          created_at: string
+          description: string | null
+          description_am: string | null
+          download_count: number | null
+          file_size: number | null
+          file_type: string
+          file_url: string
+          id: string
+          language: string
+          title: string
+          title_am: string | null
+          updated_at: string
+        }
+        Insert: {
+          category?: string | null
+          cover_image?: string | null
+          created_at?: string
+          description?: string | null
+          description_am?: string | null
+          download_count?: number | null
+          file_size?: number | null
+          file_type?: string
+          file_url: string
+          id?: string
+          language?: string
+          title: string
+          title_am?: string | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string | null
+          cover_image?: string | null
+          created_at?: string
+          description?: string | null
+          description_am?: string | null
+          download_count?: number | null
+          file_size?: number | null
+          file_type?: string
+          file_url?: string
+          id?: string
+          language?: string
+          title?: string
+          title_am?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       faqs: {
         Row: {
           answer: string
+          answer_am: string | null
           created_at: string
           id: string
+          language: string | null
           question: string
+          question_am: string | null
           subject: string
           updated_at: string
         }
         Insert: {
           answer: string
+          answer_am?: string | null
           created_at?: string
           id?: string
+          language?: string | null
           question: string
+          question_am?: string | null
           subject: string
           updated_at?: string
         }
         Update: {
           answer?: string
+          answer_am?: string | null
           created_at?: string
           id?: string
+          language?: string | null
           question?: string
+          question_am?: string | null
           subject?: string
           updated_at?: string
         }
@@ -61,37 +208,49 @@ export type Database = {
         Row: {
           category: string
           content: string
+          content_am: string | null
           created_at: string
           description: string
+          description_am: string | null
           difficulty: string
           id: string
+          language: string | null
           read_time: string
           tags: string[] | null
           title: string
+          title_am: string | null
           updated_at: string
         }
         Insert: {
           category: string
           content: string
+          content_am?: string | null
           created_at?: string
           description: string
+          description_am?: string | null
           difficulty?: string
           id?: string
+          language?: string | null
           read_time?: string
           tags?: string[] | null
           title: string
+          title_am?: string | null
           updated_at?: string
         }
         Update: {
           category?: string
           content?: string
+          content_am?: string | null
           created_at?: string
           description?: string
+          description_am?: string | null
           difficulty?: string
           id?: string
+          language?: string | null
           read_time?: string
           tags?: string[] | null
           title?: string
+          title_am?: string | null
           updated_at?: string
         }
         Relationships: []
