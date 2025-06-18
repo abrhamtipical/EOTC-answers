@@ -37,40 +37,66 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (error) {
-      toast.error(error.message);
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) {
+        toast.error(error.message);
+        throw error;
+      }
+      toast.success('Welcome back!');
+    } catch (error) {
+      console.error('Sign in error:', error);
       throw error;
     }
-    toast.success('Welcome back!');
   };
 
   const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-    if (error) {
-      toast.error(error.message);
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/`
+        }
+      });
+      if (error) {
+        toast.error(error.message);
+        throw error;
+      }
+      toast.success('Account created! Please check your email to verify.');
+    } catch (error) {
+      console.error('Sign up error:', error);
       throw error;
     }
-    toast.success('Account created! Please check your email to verify.');
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      toast.error(error.message);
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        toast.error(error.message);
+        throw error;
+      }
+      toast.success('Signed out successfully');
+    } catch (error) {
+      console.error('Sign out error:', error);
       throw error;
     }
-    toast.success('Signed out successfully');
+  };
+
+  const value = {
+    user,
+    loading,
+    signIn,
+    signUp,
+    signOut,
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

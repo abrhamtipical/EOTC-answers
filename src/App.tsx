@@ -17,7 +17,14 @@ import { Layout } from '@/components/Layout';
 import { AuthProvider } from '@/providers/AuthProvider';
 import './App.css';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      retry: 1,
+    },
+  },
+});
 
 function App() {
   return (
