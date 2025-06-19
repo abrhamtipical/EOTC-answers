@@ -1,127 +1,73 @@
+# Welcome to your Lovable project
 
-# EOTC Answers - Frontend
+## Project info
 
-This is the frontend code for the Ethiopian Orthodox Tewahedo Church Answers application. The design is fully responsive and includes all the modern UI elements and animations from the original React application.
+**URL**: https://lovable.dev/projects/08350e5b-9e96-4de9-b536-0bce482288ef
 
-## Files Structure
+## How can I edit this code?
 
-- `index.html` - Main HTML file with complete markup
-- `styles.css` - Complete CSS with all styling, animations, and responsive design
-- `script.js` - JavaScript for interactivity and PHP integration helpers
+There are several ways of editing your application.
 
-## Features
+**Use Lovable**
 
-### Design Elements
-- Modern gradient backgrounds with floating elements
-- Animated hero section with pulse effects
-- Interactive cards with hover effects
-- Responsive grid layouts
-- Beautiful typography with Inter font
-- Dark mode support (automatic based on system preference)
+Simply visit the [Lovable Project](https://lovable.dev/projects/08350e5b-9e96-4de9-b536-0bce482288ef) and start prompting.
 
-### Interactive Components
-- Fixed header with navigation buttons
-- AI question submission form
-- Bottom navigation bar
-- Download banner with close functionality
-- Smooth animations and transitions
-- Toast notifications system
+Changes made via Lovable will be committed automatically to this repo.
 
-### PHP Integration Ready
-The JavaScript includes utility functions for easy PHP backend integration:
+**Use your preferred IDE**
 
-```javascript
-// Submit question to PHP backend
-EOTCApp.submitQuestion("Your question here");
+If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-// Get teachings from PHP API
-EOTCApp.getTeachings({ category: "theology" });
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-// User authentication
-EOTCApp.authenticate({ email: "user@email.com", password: "password" });
+Follow these steps:
+
+```sh
+# Step 1: Clone the repository using the project's Git URL.
+git clone <YOUR_GIT_URL>
+
+# Step 2: Navigate to the project directory.
+cd <YOUR_PROJECT_NAME>
+
+# Step 3: Install the necessary dependencies.
+npm i
+
+# Step 4: Start the development server with auto-reloading and an instant preview.
+npm run dev
 ```
 
-## PHP Backend Integration
+**Edit a file directly in GitHub**
 
-To integrate with your PHP backend, you'll need to create these API endpoints:
+- Navigate to the desired file(s).
+- Click the "Edit" button (pencil icon) at the top right of the file view.
+- Make your changes and commit the changes.
 
-### Required Endpoints
+**Use GitHub Codespaces**
 
-1. **POST** `/api/questions/submit` - Handle question submissions
-2. **GET** `/api/teachings` - Get teachings list
-3. **GET** `/api/faqs` - Get FAQ list
-4. **POST** `/api/auth/login` - User authentication
-5. **POST** `/api/auth/register` - User registration
+- Navigate to the main page of your repository.
+- Click on the "Code" button (green button) near the top right.
+- Select the "Codespaces" tab.
+- Click on "New codespace" to launch a new Codespace environment.
+- Edit files directly within the Codespace and commit and push your changes once you're done.
 
-### Example PHP Response Format
+## What technologies are used for this project?
 
-```php
-// For questions/submit
-{
-    "success": true,
-    "message": "Question submitted successfully",
-    "question_id": 123
-}
+This project is built with:
 
-// For teachings
-{
-    "success": true,
-    "data": [
-        {
-            "id": 1,
-            "title": "Teaching Title",
-            "category": "Theology",
-            "read_time": "5 min read",
-            "content": "Teaching content..."
-        }
-    ]
-}
-```
+- Vite
+- TypeScript
+- React
+- shadcn-ui
+- Tailwind CSS
 
-## Customization
+## How can I deploy this project?
 
-### Colors
-The CSS uses CSS custom properties (variables) for easy color customization:
+Simply open [Lovable](https://lovable.dev/projects/08350e5b-9e96-4de9-b536-0bce482288ef) and click on Share -> Publish.
 
-```css
-:root {
-    --primary-500: #f59e0b;  /* Main amber color */
-    --orange-500: #f97316;   /* Orange accent */
-    --blue-500: #3b82f6;     /* Blue for FAQ section */
-}
-```
+## Can I connect a custom domain to my Lovable project?
 
-### Fonts
-Currently uses Inter font from Google Fonts. To change:
+Yes, you can!
 
-1. Update the Google Fonts link in `index.html`
-2. Update the `font-family` in CSS
+To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
-### Layout
-The design is fully responsive with breakpoints at:
-- Mobile: < 640px
-- Tablet: 640px - 768px
-- Desktop: > 768px
-
-## Browser Support
-
-- Modern browsers (Chrome, Firefox, Safari, Edge)
-- CSS Grid and Flexbox support required
-- JavaScript ES6+ features used
-
-## Installation
-
-1. Upload the three files to your web server
-2. Ensure your PHP backend endpoints are set up
-3. Update the API endpoints in `script.js` if needed
-4. Test the integration
-
-## Notes
-
-- All animations are CSS-based for smooth performance
-- JavaScript is vanilla (no frameworks required)
-- Ready for progressive enhancement with PHP
-- SEO-friendly semantic HTML structure
-- Accessible design with proper ARIA labels
-
-This frontend maintains all the visual appeal and functionality of the original React application while being perfectly suited for PHP backend integration.
+Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
